@@ -1,0 +1,28 @@
+services:
+  server-1:
+    build: .
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+    restart: unless-stopped
+    labels:
+      autoheal-service: true
+    healthcheck:
+        test: /usr/local/bin/healthcheck.sh || exit 1
+        start_period: 1m30s
+        interval: 15s
+        timeout: 30s
+        retries: 3
+    
+  autoheal:
+    deploy:
+      replicas: 1
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: autoheal-service
+    image: willfarrell/autoheal:latest
+    network_mode: none
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
