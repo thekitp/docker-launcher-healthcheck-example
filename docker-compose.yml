@@ -14,10 +14,25 @@ services:
         interval: 15s
         timeout: 30s
         retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 512m
+        reservations:
+          cpus: '1.0'
+          memory: 256M
     
   autoheal:
     deploy:
       replicas: 1
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256m
+        reservations:
+          cpus: '0.5'
+          memory: 128M
     environment:
       AUTOHEAL_CONTAINER_LABEL: autoheal-service
     image: willfarrell/autoheal:latest
