@@ -14,4 +14,9 @@ docker compose up -d
 watch docker compose ps
 ```
 
+## access the server-1 REST API from another container
+```bash
+docker run --rm --network container:server-1 curlimages/curl:latest -L -v http://localhost:8081
+```
+
 The `autoheal` container will restart any container that have label `autoheal-service=true` when the healthcheck fails.

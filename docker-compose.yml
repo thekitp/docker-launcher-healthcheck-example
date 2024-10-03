@@ -1,6 +1,7 @@
 services:
   server-1:
     build: .
+    container_name: server-1
     ports:
       - "8081:8081"
       - "8082:8082"
